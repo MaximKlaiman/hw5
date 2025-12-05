@@ -14,7 +14,6 @@ using namespace std;
 
 static const Worker_T INVALID_ID = (unsigned int)-1;
 
-// i didn't know what to call this helper
 bool backtrackHelp(
     const AvailabilityMatrix& avail,
     size_t dNeed,
@@ -28,30 +27,30 @@ bool backtrackHelp(
     int n = avail.size();
     int k = avail[0].size();
 
-    // if we filled everything??
+    
     if(day == n) {
         return true;
     }
 
-    // if we filled all d slots for this day, move to the next one
+    
     if(slot == (int)dNeed) {
         return backtrackHelp(avail, dNeed, mShifts, sched, used, day+1, 0);
     }
 
-    // try workers one by one
+    
     for(int w = 0; w < k; w++) {
 
-        // check availability first
+        
         if(!avail[day][w]) {
-            continue; // can't work today
+            continue; 
         }
 
-        // can't exceed max shifts
+        
         if(used[w] >= (int)mShifts) {
             continue;
         }
 
-        // also can't assign same worker twice in same day
+       
         bool already = false;
         for(int x = 0; x < (int)sched[day].size(); x++) {
             if(sched[day][x] == (Worker_T)w) {
@@ -61,21 +60,21 @@ bool backtrackHelp(
         }
         if(already) continue;
 
-        // looks ok, so try it
+        
         sched[day][slot] = w;
         used[w]++;
 
-        // recurse again
+       
         if(backtrackHelp(avail, dNeed, mShifts, sched, used, day, slot+1)) {
             return true;
         }
 
-        // undo it
+        
         used[w]--;
         sched[day][slot] = INVALID_ID;
     }
 
-    // nothing worked
+    
     return false;
 }
 
