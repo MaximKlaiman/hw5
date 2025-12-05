@@ -87,17 +87,17 @@ bool schedule(
 )
 {
     if(avail.size() == 0U) {
-        return false; // nothing to schedule LOL
+        return false; 
     }
 
     int n = avail.size();
     int k = avail[0].size();
 
-    // i think we need to resize sched first
+    
     sched.clear();
     sched.resize(n);
 
-    // set all slots to invalid so it's easier to track
+    
     for(int i = 0; i < n; i++) {
         sched[i].resize(dailyNeed);
         for(int j = 0; j < (int)dailyNeed; j++) {
@@ -105,10 +105,10 @@ bool schedule(
         }
     }
 
-    // track how many shifts each worker has done
+    
     vector<int> used(k, 0);
 
-    // call the weird helper function
+    
     bool ok = backtrackHelp(avail, dailyNeed, maxShifts, sched, used, 0, 0);
 
     return ok;
